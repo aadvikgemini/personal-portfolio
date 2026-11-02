@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* Lenis smooth scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090c10;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2638;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+@theme {
+  --font-display: "Plus Jakarta Sans", "Space Grotesk", sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* Palette: Deep charcoal / near-black, electric cyan, soft blue */
+  --color-charcoal-void: #07090e;
+  --color-charcoal-base: #090c12;
+  --color-charcoal-surface: #0e121b;
+  --color-charcoal-card: #131924;
+  --color-charcoal-hover: #192231;
+  --color-charcoal-border: rgba(255, 255, 255, 0.08);
+  --color-charcoal-border-strong: rgba(56, 189, 248, 0.25);
+
+  --color-cyan-electric: #00f0ff;
+  --color-cyan-glow: #38bdf8;
+  --color-blue-soft: #60a5fa;
+  --color-blue-accent: #3b82f6;
+
+  --color-text-white: #f8fafc;
+  --color-text-dim: #94a3b8;
+  --color-text-muted: #64748b;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    background: #080b10;
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  body {
+    margin: 0;
+    background: #080b10;
+    color: #f1f5f9;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: rgba(0, 240, 255, 0.2);
+    color: #ffffff;
+  }
+  :focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  /* Subtle technical grid pattern */
+  .tech-grid {
+    background-size: 48px 48px;
+    background-image: 
+      linear-gradient(to right, rgba(56, 189, 248, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.035) 1px, transparent 1px);
+  }
+
+  .tech-grid-dots {
+    background-size: 24px 24px;
+    background-image: radial-gradient(circle, rgba(56, 189, 248, 0.1) 1px, transparent 1px);
+  }
+
+  /* Glassmorphism surfaces */
+  .glass-card {
+    background: rgba(14, 18, 27, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(19, 25, 36, 0.85);
+    border-color: rgba(56, 189, 248, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(56, 189, 248, 0.1);
+  }
+
+  /* Electric cyan gradient text */
+  .text-cyan-gradient {
+    background: linear-gradient(135deg, #ffffff 30%, #38bdf8 80%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-blue-gradient {
+    background: linear-gradient(135deg, #ffffff 40%, #93c5fd 80%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Subtle cyan glow */
+  .glow-cyan-sm {
+    box-shadow: 0 0 15px -3px rgba(56, 189, 248, 0.25);
+  }
+
+  .glow-cyan-md {
+    box-shadow: 0 0 25px -4px rgba(56, 189, 248, 0.3);
+  }
+
+  /* HUD corner brackets */
+  .brackets {
+    background:
+      linear-gradient(currentColor, currentColor) top left / 10px 1px,
+      linear-gradient(currentColor, currentColor) top left / 1px 10px,
+      linear-gradient(currentColor, currentColor) top right / 10px 1px,
+      linear-gradient(currentColor, currentColor) top right / 1px 10px,
+      linear-gradient(currentColor, currentColor) bottom left / 10px 1px,
+      linear-gradient(currentColor, currentColor) bottom left / 1px 10px,
+      linear-gradient(currentColor, currentColor) bottom right / 10px 1px,
+      linear-gradient(currentColor, currentColor) bottom right / 1px 10px;
+    background-repeat: no-repeat;
+  }
+}

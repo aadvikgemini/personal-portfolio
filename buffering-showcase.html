@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Campus Connect — Buffering Experience Suite</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="color-scheme" content="light">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      min-height: 100vh;
+      background-color: #FFFFFF;
+      background: #FFFFFF;
+      color: #0F172A;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Minimal Top Navigation Pill Bar */
+    .top-nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+      border-radius: 9999px;
+      padding: 5px;
+      gap: 4px;
+      max-width: 96vw;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 7px 15px;
+      border-radius: 9999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #64748B;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .nav-btn:hover {
+      color: #0F172A;
+      background: #F1F5F9;
+    }
+    .nav-btn.active {
+      background: #0F172A;
+      color: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.18);
+    }
+    .nav-badge {
+      font-size: 9.5px;
+      padding: 1.5px 7px;
+      border-radius: 9999px;
+      background: #3B82F6;
+      color: #FFFFFF;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .nav-btn.active .nav-badge {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Screen Stage */
+    .screen-stage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: #FFFFFF;
+    }
+
+    .screen-panel {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+    }
+    .screen-panel.active {
+      display: flex;
+    }
+
+    /* Common Vector Animation Sizing - Compact & Cute */
+    .animation-svg {
+      display: block;
+      width: 250px;
+      height: 140px;
+      max-width: 80vw;
+      max-height: 40vh;
+      margin: 0 auto;
+      overflow: visible;
+    }
+
+    /* Modern Minimalist Loading Typography */
+    .cc-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 14px 0 4px 0;
+    }
+
+    .cc-loading-text {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      color: #0F172A;
+      text-align: center;
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+
+    .cc-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      color: #475569;
+      margin-top: 3px;
+      line-height: 1.45;
+      max-width: 320px;
+    }
+
+    .cc-dot {
+      display: inline-block;
+      opacity: 0.15;
+      animation: ccDotFade 1.4s infinite ease-in-out;
+      font-weight: 700;
+    }
+    .cc-dot-1 { animation-delay: 0.0s; }
+    .cc-dot-2 { animation-delay: 0.28s; }
+    .cc-dot-3 { animation-delay: 0.56s; }
+
+    @keyframes ccDotFade {
+      0%, 20%  { opacity: 0.15; transform: translateY(0); }
+      40%      { opacity: 1; transform: translateY(-2px); }
+      60%, 100%{ opacity: 0.15; transform: translateY(0); }
+    }
+
+    /* -------------------------------------------------------------
+       SCREEN 2: RADAR CO-RIDER MATCHING ANIMATIONS
+       ------------------------------------------------------------- */
+    @keyframes radarSweep {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .radar-sweep-arm {
+      animation: radarSweep 3.2s linear infinite;
+    }
+
+    @keyframes radarWaveExpand {
+      0%   { r: 10px; opacity: 0.85; stroke-width: 2.5px; }
+      75%  { r: 76px; opacity: 0.12; stroke-width: 1.5px; }
+      100% { r: 84px; opacity: 0; stroke-width: 0.5px; }
+    }
+    .wave-1 { animation: radarWaveExpand 2.6s ease-out infinite; }
+    .wave-2 { animation: radarWaveExpand 2.6s ease-out infinite 0.85s; }
+    .wave-3 { animation: radarWaveExpand 2.6s ease-out infinite 1.7s; }
+
+    @keyframes markerPop {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-5px) scale(1.06); }
+    }
+    .marker-1 { transform-origin: 80px 105px; animation: markerPop 1.6s ease-in-out infinite; }
+    .marker-2 { transform-origin: 240px 100px; animation: markerPop 1.6s ease-in-out infinite 0.5s; }
+    .dest-marker { transform-origin: 160px 40px; animation: markerPop 1.8s ease-in-out infinite 0.9s; }
+
+    @keyframes pinRipplePulse {
+      0%   { r: 15px; opacity: 0.8; stroke-width: 2px; }
+      100% { r: 28px; opacity: 0; stroke-width: 0.5px; }
+    }
+    .pin-ripple { animation: pinRipplePulse 1.6s ease-out infinite; }
+
+    @keyframes routeFlow {
+      from { stroke-dashoffset: 40; }
+      to   { stroke-dashoffset: 0; }
+    }
+    .route-path {
+      animation: routeFlow 1.2s linear infinite;
+    }
+
+    /* -------------------------------------------------------------
+       SCREEN 3: FARE SPLITTER (Coins & Receipt)
+       ------------------------------------------------------------- */
+    @keyframes receiptHover {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+    .receipt-card-anim {
+      transform-origin: 160px 70px;
+      animation: receiptHover 2.2s ease-in-out infinite;
+    }
+
+    @keyframes coinJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      30%      { transform: translateY(-10px) scale(1.08); }
+      60%      { transform: translateY(1px) scale(0.96); }
+    }
+    .coin-1 { transform-origin: 65px 135px; animation: coinJump 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+    .coin-2 { transform-origin: 160px 150px; animation: coinJump 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite 0.3s; }
+    .coin-3 { transform-origin: 255px 135px; animation: coinJump 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite 0.6s; }
+
+    @keyframes sparkleTwinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg); }
+      50%      { opacity: 1; transform: scale(1.2) rotate(45deg); }
+    }
+    .sp-1 { transform-origin: 120px 45px; animation: sparkleTwinkle 1.4s ease-in-out infinite; }
+    .sp-2 { transform-origin: 205px 44px; animation: sparkleTwinkle 1.4s ease-in-out infinite 0.7s; }
+
+    /* -------------------------------------------------------------
+       SCREEN 4: CAMPUS ELECTRIC SHUTTLE
+       ------------------------------------------------------------- */
+    @keyframes shuttleSuspension {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25%      { transform: translateY(-2px) rotate(0.4deg); }
+      75%      { transform: translateY(1px) rotate(-0.3deg); }
+    }
+    .shuttle-chassis {
+      transform-origin: 160px 115px;
+      animation: shuttleSuspension 0.65s ease-in-out infinite;
+    }
+
+    @keyframes wheelFastSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .wheel-spin-group {
+      animation: wheelFastSpin 0.55s linear infinite;
+    }
+
+    @keyframes roadGlide {
+      0%   { transform: translateX(50px); opacity: 0; }
+      20%  { opacity: 0.8; }
+      80%  { opacity: 0.8; }
+      100% { transform: translateX(-50px); opacity: 0; }
+    }
+    .rd-1 { animation: roadGlide 0.7s linear infinite; }
+    .rd-2 { animation: roadGlide 0.7s linear infinite 0.23s; }
+    .rd-3 { animation: roadGlide 0.7s linear infinite 0.46s; }
+
+    @keyframes cloudDrift {
+      0%   { transform: translateX(80px); opacity: 0; }
+      20%  { opacity: 0.7; }
+      80%  { opacity: 0.7; }
+      100% { transform: translateX(-80px); opacity: 0; }
+    }
+    .cl-1 { animation: cloudDrift 5s linear infinite; }
+    .cl-2 { animation: cloudDrift 5s linear infinite 2.5s; }
+
+    @keyframes sparkFlicker {
+      0%, 100% { opacity: 0.3; transform: scale(0.6); }
+      50%      { opacity: 1; transform: scale(1.1); }
+    }
+    .e-spark.sp-1 { animation: sparkFlicker 0.6s ease-in-out infinite; }
+    .e-spark.sp-2 { animation: sparkFlicker 0.6s ease-in-out infinite 0.2s; }
+    .e-spark.sp-3 { animation: sparkFlicker 0.6s ease-in-out infinite 0.4s; }
+
+    /* -------------------------------------------------------------
+       SCREEN 5: STUDENT SAFETY & ID VERIFICATION
+       ------------------------------------------------------------- */
+    @keyframes idFloatTilt {
+      0%, 100% { transform: scale(1) rotate(0deg) translateY(0); }
+      25%      { transform: scale(1.02) rotate(-1.5deg) translateY(-2px); }
+      75%      { transform: scale(1.02) rotate(1.5deg) translateY(-2px); }
+    }
+    .id-card-tilt {
+      transform-origin: 160px 80px;
+      animation: idFloatTilt 3s ease-in-out infinite;
+    }
+
+    @keyframes laserSweepDown {
+      0%, 100% { transform: translateY(0); opacity: 0.2; }
+      50%      { transform: translateY(45px); opacity: 0.9; }
+    }
+    .scanner-laser {
+      animation: laserSweepDown 1.8s ease-in-out infinite;
+    }
+
+    @keyframes shieldGlowPulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.12); }
+    }
+    .shield-badge-pop {
+      transform-origin: 205px 110px;
+      animation: shieldGlowPulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    }
+
+    @keyframes shieldWave {
+      0%   { r: 24px; opacity: 0.8; stroke-width: 2.5px; }
+      100% { r: 40px; opacity: 0; stroke-width: 0.5px; }
+    }
+    .shield-pulse-ring {
+      animation: shieldWave 1.5s ease-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Segmented Navigation (Click to explore buffering states) -->
+  <header class="top-nav" role="tablist">
+    <button class="nav-btn active" onclick="switchScreen(0)" role="tab" id="tab-0">
+      <span>1. Vehicles Morph</span>
+      <span class="nav-badge">Video</span>
+    </button>
+    <button class="nav-btn" onclick="switchScreen(1)" role="tab" id="tab-1">
+      <span>2. Co-Rider Radar</span>
+      <span class="nav-badge" style="background:#7C3AED;">Matching</span>
+    </button>
+    <button class="nav-btn" onclick="switchScreen(2)" role="tab" id="tab-2">
+      <span>3. Fare Splitter</span>
+      <span class="nav-badge" style="background:#059669;">₹ Savings</span>
+    </button>
+    <button class="nav-btn" onclick="switchScreen(3)" role="tab" id="tab-3">
+      <span>4. Campus Shuttle</span>
+      <span class="nav-badge" style="background:#D97706;">Transit</span>
+    </button>
+    <button class="nav-btn" onclick="switchScreen(4)" role="tab" id="tab-4">
+      <span>5. Verified Student ID</span>
+      <span class="nav-badge" style="background:#0284C7;">Safety</span>
+    </button>
+  </header>
+
+  <!-- Stage -->
+  <main class="screen-stage">
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 1: THE VEHICLE TRANSFORMATION (CURRENT PRIMARY)                -->
+    <!-- ===================================================================== -->
+    <div class="screen-panel active" id="panel-0">
+      <div style="width:100%;max-width:250px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:#FFFFFF;overflow:hidden;margin:0 auto;">
+        <video id="showcaseVid" src="campus-connect-transition.mp4" autoplay loop muted playsinline preload="auto" style="width:100%;height:100%;object-fit:contain;background:#FFFFFF;border:none;outline:none;display:block;" aria-label="Campus Connect animated vehicle transformation"></video>
+      </div>
+      <p class="cc-title" style="color:#0284C7;">Main Navigation Transition</p>
+      <p class="cc-loading-text">Loading<span class="cc-dot cc-dot-1">.</span><span class="cc-dot cc-dot-2">.</span><span class="cc-dot cc-dot-3">.</span></p>
+      <p class="cc-subtitle">Seamless multimodal journey: Car → Delivery Scooter → Campus Bicycle</p>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 2: CO-RIDER RADAR MATCHING (FINDING PEER STUDENTS)             -->
+    <!-- ===================================================================== -->
+    <div class="screen-panel" id="panel-1">
+      <svg class="animation-svg" viewBox="0 0 320 180" width="320" height="180">
+        <defs>
+          <radialGradient id="radarBgGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.14"/>
+            <stop offset="65%" stop-color="#C4B5FD" stop-opacity="0.04"/>
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.02"/>
+          </linearGradient>
+          <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#0F172A" flood-opacity="0.12"/>
+          </filter>
+        </defs>
+
+        <!-- Radar background circle & concentric rings -->
+        <circle cx="160" cy="90" r="75" fill="url(#radarBgGlow)" />
+        <circle cx="160" cy="90" r="72" fill="none" stroke="#DDD6FE" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle cx="160" cy="90" r="48" fill="none" stroke="#E9D5FF" stroke-width="1.5"/>
+        <circle cx="160" cy="90" r="24" fill="none" stroke="#DDD6FE" stroke-width="1.5"/>
+        
+        <!-- Radar Grid Crosshairs -->
+        <line x1="85" y1="90" x2="235" y2="90" stroke="#E9D5FF" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="160" y1="18" x2="160" y2="162" stroke="#E9D5FF" stroke-width="1" stroke-dasharray="2 2"/>
+
+        <!-- Rotating Radar Sweeping Beam -->
+        <g class="radar-sweep-arm" style="transform-origin: 160px 90px;">
+          <path d="M 160 90 L 232 90 A 72 72 0 0 0 210 39 Z" fill="url(#beamGrad)" />
+          <line x1="160" y1="90" x2="232" y2="90" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Center Radar Waves -->
+        <circle class="wave-1" cx="160" cy="90" r="10" fill="none" stroke="#7C3AED" stroke-width="2"/>
+        <circle class="wave-2" cx="160" cy="90" r="10" fill="none" stroke="#8B5CF6" stroke-width="2"/>
+        <circle class="wave-3" cx="160" cy="90" r="10" fill="none" stroke="#A78BFA" stroke-width="1.5"/>
+
+        <!-- Connecting Traveling Route Arcs -->
+        <path class="route-path" d="M 80 115 Q 115 50 160 45" fill="none" stroke="#7C3AED" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <path class="route-path" d="M 240 110 Q 205 50 160 45" fill="none" stroke="#DB2777" stroke-width="2.5" stroke-dasharray="5 4"/>
+
+        <!-- Student Pin 1 (Aarav - Hostel R3) -->
+        <g class="marker-1" filter="url(#softShadow)">
+          <ellipse cx="80" cy="118" rx="14" ry="4" fill="#CBD5E1"/>
+          <circle cx="80" cy="95" r="15" fill="#7C3AED"/>
+          <circle cx="80" cy="91" r="5.5" fill="#FFFFFF"/>
+          <path d="M 71 104 C 71 97, 89 97, 89 104 Z" fill="#FFFFFF"/>
+          <rect x="52" y="112" width="56" height="15" rx="7.5" fill="#1E1B4B"/>
+          <text x="80" y="123" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">Aarav (R3)</text>
+          <circle class="pin-ripple" cx="80" cy="95" r="16" fill="none" stroke="#7C3AED" stroke-width="2"/>
+        </g>
+
+        <!-- Student Pin 2 (Diya - Library) -->
+        <g class="marker-2" filter="url(#softShadow)">
+          <ellipse cx="240" cy="114" rx="14" ry="4" fill="#CBD5E1"/>
+          <circle cx="240" cy="91" r="15" fill="#DB2777"/>
+          <circle cx="240" cy="87" r="5.5" fill="#FFFFFF"/>
+          <path d="M 231 100 C 231 93, 249 93, 249 100 Z" fill="#FFFFFF"/>
+          <rect x="210" y="108" width="60" height="15" rx="7.5" fill="#831843"/>
+          <text x="240" y="119" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">Diya (Library)</text>
+          <circle class="pin-ripple" cx="240" cy="91" r="16" fill="none" stroke="#DB2777" stroke-width="2" style="animation-delay:0.6s;"/>
+        </g>
+
+        <!-- Destination Target Pin (Railway Station) -->
+        <g class="dest-marker" filter="url(#softShadow)">
+          <ellipse cx="160" cy="55" rx="12" ry="4" fill="#94A3B8"/>
+          <path d="M 160 52 C 148 52, 140 42, 140 32 C 140 18, 160 6, 160 6 C 160 6, 180 18, 180 32 C 180 42, 172 52, 160 52 Z" fill="#059669" />
+          <circle cx="160" cy="30" r="6" fill="#FFFFFF"/>
+          <text x="160" y="33" font-size="6" font-weight="900" fill="#059669" text-anchor="middle">★</text>
+          <rect x="126" y="-6" width="68" height="15" rx="7.5" fill="#064E3B"/>
+          <text x="160" y="4.5" font-size="8" font-weight="800" fill="#A7F3D0" text-anchor="middle">Railway Station</text>
+        </g>
+      </svg>
+      <p class="cc-title" style="color:#7C3AED;">Peer-To-Peer Co-Rider Radar</p>
+      <p class="cc-loading-text">Finding Co-Riders<span class="cc-dot cc-dot-1">.</span><span class="cc-dot cc-dot-2">.</span><span class="cc-dot cc-dot-3">.</span></p>
+      <p class="cc-subtitle">Matching 2 students heading to Railway Station to share an Uber ride</p>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 3: FARE SPLITTER (SAVING MONEY TOGETHER)                       -->
+    <!-- ===================================================================== -->
+    <div class="screen-panel" id="panel-2">
+      <svg class="animation-svg" viewBox="0 0 320 180" width="320" height="180">
+        <defs>
+          <filter id="cardShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.12"/>
+          </filter>
+          <linearGradient id="coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FDE047"/>
+            <stop offset="50%" stop-color="#F59E0B"/>
+            <stop offset="100%" stop-color="#D97706"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Base ground shadow -->
+        <ellipse cx="160" cy="158" rx="85" ry="6" fill="#E2E8F0"/>
+
+        <!-- Floating Receipt / Split Card -->
+        <g class="receipt-card-anim" filter="url(#cardShadow)">
+          <rect x="85" y="16" width="150" height="96" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+          <!-- Top emerald header band -->
+          <path d="M 85 28 C 85 21.37, 90.37 16, 97 16 L 223 16 C 229.63 16, 235 21.37, 235 28 L 235 36 L 85 36 Z" fill="#059669"/>
+          <text x="160" y="29" font-size="8" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.08em">UBER GO TRIP • CAMPUS GATE</text>
+
+          <!-- Total Cab Fare line -->
+          <text x="102" y="52" font-size="10" font-weight="600" fill="#64748B">Total Cab Fare:</text>
+          <text x="218" y="52" font-size="12" font-weight="800" fill="#0F172A" text-anchor="end">₹360</text>
+          <line x1="102" y1="59" x2="218" y2="59" stroke="#F1F5F9" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- 3-way split highlighted banner -->
+          <rect x="95" y="66" width="130" height="26" rx="6" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.2"/>
+          <text x="103" y="82" font-size="9" font-weight="700" fill="#047857">Your Equal Share:</text>
+          <text x="217" y="83" font-size="14" font-weight="900" fill="#059669" text-anchor="end">₹120</text>
+
+          <!-- Bottom tear accents -->
+          <circle cx="85" cy="112" r="5" fill="#FFFFFF"/>
+          <circle cx="235" cy="112" r="5" fill="#FFFFFF"/>
+        </g>
+
+        <!-- Split Coins Floating Apart into 3 Student Wallets -->
+        <!-- Coin 1 (Left - Rohan) -->
+        <g class="coin-1">
+          <ellipse cx="65" cy="150" rx="16" ry="4" fill="#E2E8F0"/>
+          <circle cx="65" cy="126" r="17" fill="url(#coinGrad)" stroke="#B45309" stroke-width="1.5"/>
+          <circle cx="65" cy="126" r="13" fill="none" stroke="#FEF08A" stroke-width="1.5"/>
+          <text x="65" y="132" font-size="13" font-weight="900" fill="#78350F" text-anchor="middle">₹</text>
+          <rect x="42" y="142" width="46" height="14" rx="7" fill="#0F172A"/>
+          <text x="65" y="152" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">Rohan</text>
+        </g>
+
+        <!-- Coin 2 (Center - You: Save 67%) -->
+        <g class="coin-2">
+          <ellipse cx="160" cy="162" rx="19" ry="5" fill="#CBD5E1"/>
+          <circle cx="160" cy="138" r="20" fill="url(#coinGrad)" stroke="#B45309" stroke-width="1.5"/>
+          <circle cx="160" cy="138" r="15" fill="none" stroke="#FEF08A" stroke-width="1.5"/>
+          <text x="160" y="145" font-size="15" font-weight="900" fill="#78350F" text-anchor="middle">₹</text>
+          <rect x="131" y="156" width="58" height="16" rx="8" fill="#059669"/>
+          <text x="160" y="167.5" font-size="8.5" font-weight="800" fill="#FFFFFF" text-anchor="middle">You (Save 67%)</text>
+        </g>
+
+        <!-- Coin 3 (Right - Priya) -->
+        <g class="coin-3">
+          <ellipse cx="255" cy="150" rx="16" ry="4" fill="#E2E8F0"/>
+          <circle cx="255" cy="126" r="17" fill="url(#coinGrad)" stroke="#B45309" stroke-width="1.5"/>
+          <circle cx="255" cy="126" r="13" fill="none" stroke="#FEF08A" stroke-width="1.5"/>
+          <text x="255" y="132" font-size="13" font-weight="900" fill="#78350F" text-anchor="middle">₹</text>
+          <rect x="233" y="142" width="44" height="14" rx="7" fill="#0F172A"/>
+          <text x="255" y="152" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">Priya</text>
+        </g>
+
+        <!-- Twinkling Sparkles -->
+        <path class="sp-1" d="M 120 38 L 123 43 L 128 43 L 124 46 L 126 51 L 120 48 L 114 51 L 116 46 L 112 43 L 117 43 Z" fill="#FBBF24"/>
+        <path class="sp-2" d="M 205 36 L 207 40 L 211 40 L 208 43 L 209 47 L 205 45 L 201 47 L 202 43 L 199 40 L 203 40 Z" fill="#34D399"/>
+      </svg>
+      <p class="cc-title" style="color:#059669;">Fair Fare Splitter</p>
+      <p class="cc-loading-text">Splitting Uber Fare<span class="cc-dot cc-dot-1">.</span><span class="cc-dot cc-dot-2">.</span><span class="cc-dot cc-dot-3">.</span></p>
+      <p class="cc-subtitle">Total ₹360 split 3 ways: saving each student ₹240 (67% cheaper)</p>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 4: CAMPUS ELECTRIC SHUTTLE (CAMPUS TRANSIT)                    -->
+    <!-- ===================================================================== -->
+    <div class="screen-panel" id="panel-3">
+      <svg class="animation-svg" viewBox="0 0 320 180" width="320" height="180">
+        <defs>
+          <linearGradient id="shuttleBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#34D399"/>
+            <stop offset="100%" stop-color="#059669"/>
+          </linearGradient>
+          <linearGradient id="windowTint" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E0F2FE"/>
+            <stop offset="100%" stop-color="#7DD3FC"/>
+          </linearGradient>
+          <filter id="shuttleShadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.15"/>
+          </filter>
+        </defs>
+
+        <!-- Floating Sky Clouds -->
+        <path class="cl-1" d="M 40 30 C 40 24, 46 20, 52 20 C 58 15, 68 18, 72 24 C 77 22, 84 25, 84 30 Z" fill="#F1F5F9"/>
+        <path class="cl-2" d="M 230 25 C 230 20, 235 16, 240 16 C 246 12, 254 14, 258 20 C 262 18, 268 20, 268 25 Z" fill="#F1F5F9"/>
+
+        <!-- Road Base -->
+        <line x1="20" y1="140" x2="300" y2="140" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Road Moving Speed Dashes -->
+        <g class="road-speed-dashes">
+          <line class="rd-1" x1="30" y1="148" x2="65" y2="148" stroke="#E2E8F0" stroke-width="2.5" stroke-linecap="round"/>
+          <line class="rd-2" x1="120" y1="150" x2="165" y2="150" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+          <line class="rd-3" x1="220" y1="148" x2="260" y2="148" stroke="#E2E8F0" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Bus Ground Shadow -->
+        <ellipse cx="160" cy="138" rx="80" ry="5.5" fill="#94A3B8" opacity="0.4"/>
+
+        <!-- Cute Retro-Modern Electric Shuttle Bus -->
+        <g class="shuttle-chassis" filter="url(#shuttleShadow)">
+          <!-- Electric Roof Battery Pod with Lightning Bolt -->
+          <rect x="130" y="44" width="60" height="10" rx="5" fill="#0F172A"/>
+          <rect x="140" y="46" width="40" height="6" rx="3" fill="#10B981"/>
+          <polygon points="160,42 155,50 159,50 157,56 165,48 161,48" fill="#FACC15"/>
+
+          <!-- Main Bus Body: Rounded retro silhouette -->
+          <rect x="75" y="52" width="170" height="65" rx="20" fill="url(#shuttleBodyGrad)"/>
+          <!-- Cream White Upper Half / Roof -->
+          <path d="M 95 52 L 225 52 C 236 52, 245 61, 245 72 L 245 80 L 75 80 L 75 72 C 75 61, 84 52, 95 52 Z" fill="#FFFFFF"/>
+
+          <!-- Front Windshield -->
+          <path d="M 215 58 L 235 60 C 238 61, 240 64, 240 68 L 240 76 L 215 76 Z" fill="url(#windowTint)"/>
+          
+          <!-- Passenger Windows with Student Silhouettes -->
+          <rect x="175" y="58" width="34" height="18" rx="4" fill="url(#windowTint)"/>
+          <circle cx="192" cy="67" r="4.5" fill="#065F46" opacity="0.55"/>
+          <path d="M 185 75 C 185 71, 199 71, 199 75 Z" fill="#065F46" opacity="0.55"/>
+
+          <rect x="135" y="58" width="34" height="18" rx="4" fill="url(#windowTint)"/>
+          <circle cx="152" cy="67" r="4.5" fill="#065F46" opacity="0.55"/>
+          <path d="M 145 75 C 145 71, 159 71, 159 75 Z" fill="#065F46" opacity="0.55"/>
+
+          <!-- Rear Window -->
+          <path d="M 85 60 L 125 58 L 125 76 L 80 76 L 80 68 C 80 64, 82 61, 85 60 Z" fill="url(#windowTint)"/>
+
+          <!-- University Branding Stripe & Logo -->
+          <rect x="75" y="80" width="170" height="4" fill="#047857"/>
+          <rect x="110" y="90" width="100" height="16" rx="8" fill="#FFFFFF"/>
+          <text x="160" y="101" font-size="8" font-weight="900" fill="#065F46" text-anchor="middle" letter-spacing="0.08em">CAMPUS SHUTTLE • #2</text>
+
+          <!-- Warm Glowing Headlight Beam -->
+          <path d="M 245 92 L 285 85 L 285 108 L 245 98 Z" fill="#FEF08A" opacity="0.35"/>
+          <ellipse cx="245" cy="94" rx="2.5" ry="5" fill="#FDE047"/>
+          <!-- Red Taillight -->
+          <rect x="73" y="90" width="3.5" height="8" rx="1.5" fill="#EF4444"/>
+
+          <!-- Front Bumper -->
+          <rect x="240" y="106" width="9" height="7" rx="3.5" fill="#94A3B8"/>
+          <!-- Rear Bumper -->
+          <rect x="71" y="106" width="8" height="7" rx="3.5" fill="#94A3B8"/>
+
+          <!-- Wheel Arches -->
+          <path d="M 94 117 C 94 103, 126 103, 126 117 Z" fill="#FFFFFF"/>
+          <path d="M 194 117 C 194 103, 226 103, 226 117 Z" fill="#FFFFFF"/>
+          <path d="M 96 117 C 96 105, 124 105, 124 117 Z" fill="#0F172A"/>
+          <path d="M 196 117 C 196 105, 224 105, 224 117 Z" fill="#0F172A"/>
+
+          <!-- Cute electric sparkles from rear -->
+          <circle class="e-spark sp-1" cx="62" cy="108" r="3" fill="#34D399"/>
+          <circle class="e-spark sp-2" cx="50" cy="102" r="4.5" fill="#6EE7B7"/>
+          <circle class="e-spark sp-3" cx="38" cy="98" r="3.5" fill="#A7F3D0"/>
+        </g>
+
+        <!-- Wheels (Spinning rims with lug nuts) -->
+        <g class="wheel-spin-group" style="transform-origin: 110px 117px;">
+          <circle cx="110" cy="117" r="15" fill="#1E293B"/>
+          <circle cx="110" cy="117" r="9.5" fill="#E2E8F0"/>
+          <circle cx="110" cy="117" r="4.5" fill="#059669"/>
+          <line x1="110" y1="108" x2="110" y2="126" stroke="#94A3B8" stroke-width="1.5"/>
+          <line x1="101" y1="117" x2="119" y2="117" stroke="#94A3B8" stroke-width="1.5"/>
+        </g>
+        <g class="wheel-spin-group" style="transform-origin: 210px 117px;">
+          <circle cx="210" cy="117" r="15" fill="#1E293B"/>
+          <circle cx="210" cy="117" r="9.5" fill="#E2E8F0"/>
+          <circle cx="210" cy="117" r="4.5" fill="#059669"/>
+          <line x1="210" y1="108" x2="210" y2="126" stroke="#94A3B8" stroke-width="1.5"/>
+          <line x1="201" y1="117" x2="219" y2="117" stroke="#94A3B8" stroke-width="1.5"/>
+        </g>
+      </svg>
+      <p class="cc-title" style="color:#059669;">Campus Electric Shuttle</p>
+      <p class="cc-loading-text">Tracking Campus Bus<span class="cc-dot cc-dot-1">.</span><span class="cc-dot cc-dot-2">.</span><span class="cc-dot cc-dot-3">.</span></p>
+      <p class="cc-subtitle">Shuttle #2 is arriving at Hostel Gate in 2 mins • 100% Electric</p>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 5: STUDENT SAFETY & CREDENTIAL VERIFICATION                    -->
+    <!-- ===================================================================== -->
+    <div class="screen-panel" id="panel-4">
+      <svg class="animation-svg" viewBox="0 0 320 180" width="320" height="180">
+        <defs>
+          <filter id="idShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.12"/>
+          </filter>
+          <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#34D399"/>
+            <stop offset="50%" stop-color="#10B981"/>
+            <stop offset="100%" stop-color="#047857"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse cx="160" cy="155" rx="70" ry="5" fill="#E2E8F0"/>
+
+        <!-- University Lanyard Ribbon -->
+        <path d="M 160 8 L 160 30" stroke="#0284C7" stroke-width="6" stroke-linecap="round"/>
+        <rect x="150" y="24" width="20" height="8" rx="2" fill="#94A3B8"/>
+        <circle cx="160" cy="28" r="2.5" fill="#FFFFFF"/>
+
+        <!-- Floating Student ID Card with Hologram -->
+        <g class="id-card-tilt" filter="url(#idShadow)">
+          <rect x="95" y="30" width="130" height="86" rx="10" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.5"/>
+          
+          <!-- University Header Bar -->
+          <path d="M 95 38 C 95 33.5, 98.5 30, 103 30 L 217 30 C 221.5 30, 225 33.5, 225 38 L 225 44 L 95 44 Z" fill="#0284C7"/>
+          <text x="160" y="39" font-size="7.5" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.08em">UNIVERSITY CAMPUS PASS</text>
+
+          <!-- Student Avatar Photo -->
+          <rect x="106" y="52" width="30" height="36" rx="6" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1.5"/>
+          <circle cx="121" cy="64" r="7" fill="#0284C7"/>
+          <path d="M 112 82 C 112 75, 130 75, 130 82 Z" fill="#0284C7"/>
+
+          <!-- Holographic security strip -->
+          <rect x="144" y="52" width="70" height="6" rx="3" fill="#E0F2FE"/>
+          <line x1="148" y1="55" x2="210" y2="55" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+          <!-- ID Credentials Text Lines -->
+          <text x="144" y="69" font-size="9" font-weight="800" fill="#0F172A">Aarav Sharma</text>
+          <text x="144" y="78" font-size="7" font-weight="600" fill="#64748B">B.Tech • 3rd Year</text>
+          <text x="144" y="86" font-size="6.5" font-weight="600" fill="#0284C7">Hostel Block R-3 • #8842</text>
+
+          <!-- Glowing Laser Scanner Line (moving up and down) -->
+          <line class="scanner-laser" x1="97" y1="50" x2="223" y2="50" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Pulsing Glowing Safety Shield Badge -->
+        <g class="shield-badge-pop" filter="url(#idShadow)">
+          <circle class="shield-pulse-ring" cx="205" cy="110" r="24" fill="none" stroke="#10B981" stroke-width="2.5"/>
+          <!-- 3D Shield Shape -->
+          <path d="M 205 92 C 218 92, 226 95, 226 105 C 226 118, 205 130, 205 130 C 205 130, 184 118, 184 105 C 184 95, 192 92, 205 92 Z" fill="url(#shieldGrad)" stroke="#FFFFFF" stroke-width="2.5"/>
+          <!-- Checkmark -->
+          <path d="M 197 109 L 203 115 L 214 104" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+      <p class="cc-title" style="color:#0284C7;">Safety & Identity Verification</p>
+      <p class="cc-loading-text">Verifying Student ID<span class="cc-dot cc-dot-1">.</span><span class="cc-dot cc-dot-2">.</span><span class="cc-dot cc-dot-3">.</span></p>
+      <p class="cc-subtitle">Authenticating university domain email & hostel badge for safe peer ride</p>
+    </div>
+
+  </main>
+
+  <script>
+    function switchScreen(index) {
+      document.querySelectorAll('.screen-panel').forEach(function(el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.nav-btn').forEach(function(btn, i) {
+        btn.classList.toggle('active', i === index);
+      });
+      
+      // Auto play video if panel 0 selected
+      if (index === 0) {
+        var vid = document.getElementById('showcaseVid');
+        if (vid) {
+          vid.muted = true;
+          vid.play().catch(function() {});
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

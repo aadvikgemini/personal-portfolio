@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Campus Connect — Loading...</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Campus Connect University Student Ride-Sharing and Transportation Platform - Animated Loading Transition">
+
+  <style>
+    /* ==========================================================================
+       CAMPUS CONNECT — PURE MINIMAL FULL-SCREEN VIEWPORT
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      min-height: 100vh;
+      background-color: #FFFFFF !important;
+      background: #FFFFFF !important;
+      color: #111827;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Full-screen pure white viewport container */
+    .viewport-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      background-color: #FFFFFF;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      z-index: 1000;
+    }
+
+    /* Centered animation component: Vehicle Video + Loading Typography */
+    .animation-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      position: relative;
+    }
+
+    /* Video Frame Container - small, cute, balanced proportions */
+    .video-container {
+      width: 100%;
+      max-width: 250px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #FFFFFF;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    /* Seamless silent video */
+    .cc-transition-video {
+      width: 100%;
+      height: 100%;
+      max-height: 38vh;
+      object-fit: contain;
+      display: block;
+      background-color: #FFFFFF;
+      border: none;
+      outline: none;
+      pointer-events: none; /* purely visual animation */
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Loading text directly below vehicle */
+    .cc-loading-text {
+      margin-top: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #0F172A;
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      min-height: 20px;
+      line-height: 1.4;
+    }
+
+    /* Synchronized gentle ellipsis dots */
+    .cc-ellipsis {
+      display: inline-flex;
+      width: 16px;
+      margin-left: 2px;
+      text-align: left;
+    }
+
+    .cc-dot {
+      display: inline-block;
+      font-weight: 700;
+      opacity: 0.15;
+      animation: ccDotCycle 1.5s infinite;
+    }
+
+    .cc-dot-1 { animation-delay: 0.0s; }
+    .cc-dot-2 { animation-delay: 0.28s; }
+    .cc-dot-3 { animation-delay: 0.56s; }
+
+    @keyframes ccDotCycle {
+      0%, 20% {
+        opacity: 0.15;
+        transform: translateY(0);
+      }
+      40% {
+        opacity: 1;
+        transform: translateY(-1.5px);
+      }
+      65%, 100% {
+        opacity: 0.15;
+        transform: translateY(0);
+      }
+    }
+
+    /* Screen-reader only text */
+    .cc-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .video-container {
+        max-width: 220px;
+      }
+      .cc-loading-text {
+        font-size: 13.5px;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-height: 500px) {
+      .video-container {
+        max-width: 170px;
+      }
+      .cc-loading-text {
+        margin-top: 6px;
+        font-size: 12px;
+      }
+    }
+
+    /* Accessibility: Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .cc-dot {
+        animation: none;
+        opacity: 0.8;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen Minimal Pure White Container -->
+  <main class="viewport-container" role="status" aria-live="polite" aria-label="Campus Connect Loading Screen">
+    
+    <div class="animation-wrapper">
+      
+      <!-- Center Animated Vehicle Video (Silent / Without Sound) -->
+      <div class="video-container">
+        <video 
+          id="ccVideo"
+          class="cc-transition-video" 
+          src="campus-connect-transition.mp4" 
+          autoplay 
+          loop 
+          muted 
+          playsinline 
+          preload="auto"
+          aria-label="Campus Connect cartoon transportation transformation animation">
+        </video>
+      </div>
+
+      <!-- Modern Minimal Loading Typography -->
+      <p class="cc-loading-text" aria-hidden="true">
+        Loading<span class="cc-ellipsis"><span class="cc-dot cc-dot-1">.</span><span class="cc-dot cc-dot-2">.</span><span class="cc-dot cc-dot-3">.</span></span>
+      </p>
+
+      <!-- Accessible screen-reader description -->
+      <span class="cc-sr-only">Loading Campus Connect transportation options...</span>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Ensure muted autoplay across all mobile and desktop browsers
+    (function() {
+      var video = document.getElementById('ccVideo');
+      if (video) {
+        video.muted = true;
+        video.defaultMuted = true;
+        
+        // Respect reduced motion preference if requested
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+          video.pause();
+        } else {
+          var playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(function(error) {
+              console.log('Video autoplay deferred:', error);
+            });
+          }
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>
