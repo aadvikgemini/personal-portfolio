@@ -107,7 +107,7 @@ export const siteConfig: PortfolioConfig = {
     },
     portfolio: {
       githubUrl: 'https://github.com/aadvikgemini/personal-portfolio',
-      liveUrl: '#hero',
+      liveUrl: 'https://aadvik-portfolio.vercel.app',
     },
   },
 };
