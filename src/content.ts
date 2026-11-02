@@ -1,41 +1,93 @@
 /**
- * Aadvik Gemini — Portfolio Content & Data Definitions
- * Strict fidelity to user's identity as a CS & AI/ML student at Newton School of Technology (NST).
+ * Aadvik Gemini — Personal Portfolio Content & Telemetry
+ * Infused with SELENE's celestial / aerospace design language.
  */
 
 import { siteConfig } from './config';
 
-export interface NavItem {
-  label: string;
-  href: string;
-}
+export const brand = {
+  name: 'Aadvik Gemini',
+  wordmark: 'AADVIK GEMINI',
+  initials: 'AG',
+  role: 'CS & AI/ML Student @ Newton School of Technology (NST)',
+  university: 'Rishihood University',
+  location: 'Delhi NCR · 28.98°N 77.06°E',
+  email: siteConfig.contact.email,
+  github: siteConfig.socials.github,
+  linkedin: siteConfig.socials.linkedin,
+};
 
-export interface LearningInterest {
-  title: string;
-  category: string;
-  desc: string;
-  icon: string;
-}
+export const nav = [
+  { label: 'About', href: '#about' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Trajectory', href: '#trajectory' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Beyond', href: '#activities' },
+  { label: 'Exploring', href: '#exploring' },
+  { label: 'Contact', href: '#contact' },
+];
 
-export interface PersonalGoal {
-  id: number;
-  goal: string;
-  category: 'Mastery' | 'Projects' | 'Community' | 'Venture';
-  focus: string;
-}
+export const hero = {
+  title: 'AADVIK GEMINI',
+  kicker: 'COMPUTER SCIENCE STUDENT • BUILDER • TECHNOLOGY ENTHUSIAST',
+  headline: 'Learning. Building. Innovating.',
+  supporting:
+    "I'm Aadvik, a CS student at Newton School of Technology exploring AI, cybersecurity, and software development. I love turning ideas into real-world projects and building things that solve meaningful problems.",
+  site: 'Newton School of Technology · 28.98°N 77.06°E',
+  status: 'CURRENTLY LEARNING & BUILDING',
+};
+
+export const about = {
+  eyebrow: 'Identity & Foundations',
+  heading: 'More Than Just Code.',
+  paragraphs: [
+    "I'm a Computer Science student at Newton School of Technology with a growing interest in AI, cybersecurity, and software development.",
+    'I enjoy exploring new technologies, participating in hackathons, experimenting with ideas, and building projects that solve practical problems.',
+    "I'm currently focused on strengthening my programming fundamentals, learning how software systems work, and turning my ideas into functional products.",
+    "My journey is just beginning, and I'm excited about what I can build next.",
+  ],
+  education: {
+    school: 'Newton School of Technology (NST)',
+    university: 'Rishihood University',
+    degree: 'B.Tech in Computer Science & AI / ML',
+    period: 'Class of 2028 · Undergraduate',
+    location: 'Delhi NCR, India',
+    note: 'Rigorous computer science curriculum emphasizing low-level systems, algorithmic problem solving, and modern intelligent applications.',
+  },
+  interests: [
+    { title: 'Artificial Intelligence & ML', category: 'Specialization', desc: 'Understanding core models, neural pipelines, and intelligent interfaces.' },
+    { title: 'Cybersecurity', category: 'Systems & Security', desc: 'Exploring network defense, packet analysis, and OWASP principles.' },
+    { title: 'Web Development', category: 'Engineering', desc: 'Crafting responsive, accessible, and high-performance user experiences.' },
+    { title: 'Software Engineering', category: 'Foundations', desc: 'Mastering clean code, modular architectures, and algorithm design.' },
+    { title: 'Hackathons', category: 'Innovation', desc: 'Testing ideas against real clocks and building collaborative solutions.' },
+    { title: 'Startup Building', category: 'Venture', desc: 'Transforming student pain points into functional products with real users.' },
+    { title: 'Open Source', category: 'Ecosystem', desc: 'Learning collaborative Git workflows and aiming for impactful public contributions.' },
+    { title: 'Entrepreneurship', category: 'Impact', desc: 'Understanding product-market fit, student utilities, and sustainable leverage.' },
+  ],
+  goals: [
+    { id: '01', goal: 'Become a skilled software developer', focus: 'Mastering algorithmic problem-solving and software architecture' },
+    { id: '02', goal: 'Build meaningful real-world projects', focus: 'Shipping practical tools that solve everyday friction for real users' },
+    { id: '03', goal: 'Participate in national and international hackathons', focus: 'Competing with diverse builder teams on global stages' },
+    { id: '04', goal: 'Contribute to open-source projects', focus: 'Giving back to developer tools and public repositories' },
+    { id: '05', goal: 'Explore Google Summer of Code', focus: 'Diving deep into mentored open-source engineering under GSoC' },
+    { id: '06', goal: 'Build startups and innovative technology products', focus: 'Validating early-stage concepts into sustainable ventures' },
+    { id: '07', goal: 'Develop expertise in cybersecurity and AI', focus: 'Securing automated systems and mastering intelligent defenses' },
+  ],
+};
 
 export interface ProjectDetail {
   id: string;
+  tag: string;
   title: string;
-  tagline: string;
+  subtitle: string;
   category: string;
-  badge: string;
-  status: 'In Development' | 'Active';
+  status: string;
   hasLiveDemo: boolean;
   demoLabel: string;
   description: string;
   specificNotice?: string;
   team?: string;
+  image: string;
   tech: string[];
   overview: string;
   problem: string;
@@ -47,142 +99,25 @@ export interface ProjectDetail {
   liveUrl: string;
 }
 
-export interface SkillItem {
-  name: string;
-  category: 'Programming' | 'Frontend' | 'Tools' | 'Areas of Interest';
-  status: 'Learning' | 'Practicing' | 'Exploring' | 'Building With';
-  description: string;
-  focusArea: string;
-  iconName: string;
-}
-
-export interface JourneyMilestone {
-  period: string;
-  headline: string;
-  description: string;
-  area: string;
-  tags: string[];
-  isCurrent?: boolean;
-}
-
-export interface HackathonActivity {
-  id: string;
-  name: string;
-  year: string;
-  category: 'Hackathon' | 'Innovation Challenge' | 'Team Project' | 'Technical Learning';
-  projectOrActivity: string;
-  teamRole: string;
-  status: string;
-  statusType: 'participation' | 'submission' | 'in-progress';
-  description: string;
-  takeaway: string;
-  tech: string[];
-}
-
-export interface ExploringTopic {
-  id: string;
-  topic: string;
-  status: string;
-  shortDescription: string;
-  focusTrack: string;
-  relatedProjects?: string;
-  tags: string[];
-}
-
-// Navigation links matching user specification
-export const navigationItems: NavItem[] = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Journey', href: '#journey' },
-  { label: 'Activities', href: '#activities' },
-  { label: 'Exploring', href: '#exploring' },
-  { label: 'Contact', href: '#contact' },
-];
-
-export const heroContent = {
-  smallIntro: 'COMPUTER SCIENCE STUDENT • BUILDER • TECHNOLOGY ENTHUSIAST',
-  headline: ['Learning.', 'Building.', 'Innovating.'],
-  supportingText:
-    "I'm Aadvik, a CS student at Newton School of Technology exploring AI, cybersecurity, and software development. I love turning ideas into real-world projects and building things that solve meaningful problems.",
-  statusIndicator: siteConfig.personal.status,
-  primaryBtn: {
-    label: 'Explore My Projects',
-    href: '#projects',
-  },
-  secondaryBtn: {
-    label: "Let's Connect",
-    href: '#contact',
-  },
-  socialLinks: {
-    github: siteConfig.socials.github,
-    linkedin: siteConfig.socials.linkedin,
-    email: siteConfig.socials.email,
-  },
-};
-
-export const aboutContent = {
-  heading: 'More Than Just Code',
-  subheading: 'ABOUT ME & MY ASPIRATIONS',
-  paragraphs: [
-    "I'm a Computer Science student at Newton School of Technology with a growing interest in AI, cybersecurity, and software development.",
-    'I enjoy exploring new technologies, participating in hackathons, experimenting with ideas, and building projects that solve practical problems.',
-    "I'm currently focused on strengthening my programming fundamentals, learning how software systems work, and turning my ideas into functional products.",
-    "My journey is just beginning, and I'm excited about what I can build next.",
-  ],
-  education: {
-    school: 'Newton School of Technology (NST)',
-    university: 'Rishihood University',
-    degree: 'B.Tech in Computer Science & AI / ML',
-    period: 'Current Undergraduate',
-    location: 'Delhi NCR, India',
-    note: 'Focused on hands-on software development, systems thinking, and applied artificial intelligence from day one.',
-  },
-  currentInterests: [
-    { title: 'Artificial Intelligence & ML', category: 'Specialization', desc: 'Understanding core models, neural pipelines, and intelligent interfaces.', icon: 'Brain' },
-    { title: 'Cybersecurity', category: 'Systems & Security', desc: 'Exploring network defense, packet analysis, and OWASP principles.', icon: 'Shield' },
-    { title: 'Web Development', category: 'Engineering', desc: 'Crafting responsive, accessible, and high-performance user experiences.', icon: 'Layout' },
-    { title: 'Software Engineering', category: 'Foundations', desc: 'Mastering clean code, modular architectures, and algorithm design.', icon: 'Code' },
-    { title: 'Hackathons', category: 'Innovation', desc: 'Testing ideas against real clocks and building collaborative solutions.', icon: 'Trophy' },
-    { title: 'Startup Building', category: 'Venture', desc: 'Transforming student pain points into functional products with real users.', icon: 'Rocket' },
-    { title: 'Open Source', category: 'Ecosystem', desc: 'Learning collaborative Git workflows and aiming for impactful public contributions.', icon: 'GitPullRequest' },
-    { title: 'Entrepreneurship', category: 'Impact', desc: 'Understanding product-market fit, student utilities, and sustainable leverage.', icon: 'Compass' },
-  ],
-  longTermGoals: [
-    { id: 1, goal: 'Become a skilled software developer', category: 'Mastery', focus: 'Mastering algorithmic problem-solving and software architecture' },
-    { id: 2, goal: 'Build meaningful real-world projects', category: 'Projects', focus: 'Shipping practical tools that solve everyday friction for real users' },
-    { id: 3, goal: 'Participate in national and international hackathons', category: 'Community', focus: 'Competing with diverse builder teams on global stages' },
-    { id: 4, goal: 'Contribute to open-source projects', category: 'Community', focus: 'Giving back to developer tools and public repositories' },
-    { id: 5, goal: 'Explore Google Summer of Code', category: 'Mastery', focus: 'Diving deep into mentored open-source engineering under GSoC' },
-    { id: 6, goal: 'Build startups and innovative technology products', category: 'Venture', focus: 'Validating early-stage concepts into sustainable ventures' },
-    { id: 7, goal: 'Develop expertise in cybersecurity and AI', category: 'Mastery', focus: 'Securing automated systems and mastering intelligent defenses' },
-  ] as PersonalGoal[],
-};
-
-export const projectsContent: {
-  heading: string;
-  subheading: string;
-  note: string;
-  items: ProjectDetail[];
-} = {
-  heading: "Things I'm Building",
-  subheading: 'PROJECT SHOWCASE',
-  note: 'Authentic student engineering projects and concepts. Clearly labeled to reflect genuine development status.',
+export const projects = {
+  eyebrow: 'Mission Log · Builds',
+  heading: "Things I'm Building.",
+  body: 'Authentic student engineering projects and prototypes, frame by frame. Labeled with genuine development status.',
   items: [
     {
       id: 'roomrush',
+      tag: 'BUILD-01',
       title: 'RoomRush',
-      tagline: 'Hostel Marketplace & Student Pickup Concept',
+      subtitle: 'Hostel Marketplace & Student Pickup Concept',
       category: 'Startup / Web Development',
-      badge: 'Campus Venture',
       status: 'In Development',
       hasLiveDemo: false,
       demoLabel: 'Coming Soon',
+      image: '/media/cards/m3-base.webp',
       description:
         'A hostel marketplace concept designed to help students discover products available in student-run hostel shops and arrange convenient self-pickup.',
       specificNotice: 'Important: RoomRush is a student self-pickup marketplace, not a delivery service.',
-      tech: ['React', 'TypeScript', 'Tailwind CSS', 'Local Storage', 'Responsive UX'],
+      tech: ['React', 'TypeScript', 'Tailwind CSS', 'Local Storage', 'Mobile UX'],
       overview:
         'RoomRush addresses the common campus problem of late-night snack and essentials shortages. By cataloging student-run micro shops across hostel blocks, students can browse what is currently open and pick up items directly.',
       problem:
@@ -202,13 +137,14 @@ export const projectsContent: {
     },
     {
       id: 'nst-notes-extension',
+      tag: 'BUILD-02',
       title: 'NST Academic Notes Extension',
-      tagline: 'Centralized Academic Access for Students',
+      subtitle: 'Centralized Academic Access for Students',
       category: 'Productivity / Browser Extension',
-      badge: 'Student Productivity',
       status: 'In Development',
       hasLiveDemo: false,
       demoLabel: 'Coming Soon',
+      image: '/media/cards/m2-orbit.webp',
       description:
         'A proposed browser extension concept to help NST students access and organize academic notes more conveniently instead of downloading lecture materials individually.',
       tech: ['JavaScript', 'WebExtensions API', 'HTML5', 'CSS3', 'Storage API'],
@@ -231,17 +167,18 @@ export const projectsContent: {
     },
     {
       id: 'sih-lidar-mapping',
+      tag: 'BUILD-03',
       title: 'SIH 2026 LiDAR Mapping',
-      tagline: 'Adaptive Variable-Resolution 2.5D Mapping Concept',
+      subtitle: 'Adaptive Variable-Resolution 2.5D Mapping Concept',
       category: 'Hackathon / Smart Vehicle Software',
-      badge: 'SIH 2026 • Team ENIX',
+      team: 'Team ENIX',
       status: 'In Development',
       hasLiveDemo: false,
       demoLabel: 'Coming Soon',
+      image: '/media/cards/m1-launch.webp',
       description:
         'A Smart India Hackathon project concept focused on adaptive variable-resolution 2.5D LiDAR mapping.',
-      team: 'Team ENIX',
-      tech: ['Python', 'Point Cloud Data', 'Algorithmic Geometry', '2.5D Elevation Grid', 'Sensor Processing'],
+      tech: ['Python', 'Point Cloud Data', 'Algorithmic Geometry', '2.5D Elevation Grid'],
       overview:
         'Smart vehicle navigation and obstacle detection demand efficient spatial mapping without overwhelming onboard processing units. This concept explores dynamic resolution adjustments based on vehicle speed and terrain complexity.',
       problem:
@@ -261,16 +198,17 @@ export const projectsContent: {
     },
     {
       id: 'personal-portfolio',
+      tag: 'BUILD-04',
       title: 'Personal Developer Portfolio',
-      tagline: 'Interactive Showcase of Journey & Projects',
+      subtitle: 'Celestial Telemetry & Interactive Profile',
       category: 'Web Development',
-      badge: 'Active Build',
-      status: 'In Development',
+      status: 'Active Build',
       hasLiveDemo: true,
       demoLabel: 'Live View',
+      image: '/media/cards/m4-walk.webp',
       description:
         'My personal portfolio showcasing my learning journey, projects, interests, and development goals.',
-      tech: ['React 19', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Lucide Icons'],
+      tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Lenis', 'Michroma Font'],
       overview:
         'Built from scratch to serve as a digital footprint that accurately represents my stage as an ambitious CS student, learning in public, and experimenting with software.',
       problem:
@@ -278,7 +216,7 @@ export const projectsContent: {
       solution:
         'A custom-built, responsive portfolio with dark editorial aesthetics, authentic milestone tracking, honest skill indicators, and a clean configuration architecture.',
       contribution:
-        'Designed the entire user experience, wrote modular React components, implemented smooth scroll and particle canvas interactions, and configured responsive styles.',
+        'Designed the user experience, implemented single-rAF scroll kinematics with Lenis, styled with Michroma typography, and deployed live to production.',
       currentStatus: 'Active & Continuously Updated — adding new project updates, hackathon milestones, and learning logs as I progress.',
       futureImprovements: [
         'Interactive code playground for lightweight algorithm visualizers',
@@ -286,345 +224,140 @@ export const projectsContent: {
         'Expanded cybersecurity lab write-ups section',
       ],
       githubUrl: siteConfig.projects.portfolio.githubUrl,
-      liveUrl: '#hero',
+      liveUrl: siteConfig.projects.portfolio.liveUrl,
+    },
+  ] as ProjectDetail[],
+};
+
+/** Trajectory flight path from Earth to Moon mapped to Aadvik's engineering trajectory */
+export const trajectory = {
+  eyebrow: 'Engineering Flight Path',
+  heading: '384,400 km of compounding skills, drawn as you scroll.',
+  legs: [
+    {
+      day: 'Phase 01',
+      title: 'Computer Science Foundations @ NST',
+      body: 'Enrolled at Newton School of Technology (NST), Rishihood University. Drilling core programming in Python, memory pointers in C++, and discrete mathematics.',
+      stat: 'Core CS · First Principles',
+    },
+    {
+      day: 'Phase 02',
+      title: 'Modern Web & Practical Prototyping',
+      body: 'Mastered responsive UI architecture with React, TypeScript, and Tailwind CSS. Shipped working campus prototypes including the RoomRush marketplace concept and NST Notes extension.',
+      stat: 'RoomRush · Notes Ext',
+    },
+    {
+      day: 'Phase 03',
+      title: 'Hackathon Arena & Team ENIX',
+      body: 'Formed Team ENIX for Smart India Hackathon 2026 to tackle adaptive variable-resolution 2.5D LiDAR mapping. Participated in high-velocity 24-48h sprint problem solving.',
+      stat: 'SIH 2026 · Team ENIX',
+    },
+    {
+      day: 'Phase 04',
+      title: 'Systems Security & Continuous Exploration',
+      body: 'Expanding into defensive cybersecurity, network sockets, packet traces, and open-source contributions. Preparing for bigger engineering frontiers and GSoC.',
+      stat: 'Cybersecurity · Open Source',
     },
   ],
 };
 
-export const skillsContent = {
-  heading: 'My Tech Stack',
-  subheading: 'SKILLS & CAPABILITIES',
-  note: 'Honest assessment of my current learning progress. Grouped by discipline with no arbitrary percentage bars.',
-  categories: ['All', 'Programming', 'Frontend', 'Tools', 'Areas of Interest'] as const,
-  items: [
-    // Programming
+export const skillsData = {
+  eyebrow: 'Tech Stack & Arsenal',
+  heading: 'Honest Capabilities.',
+  note: 'Orbital rings indicate focus intensity. Zero fake percentage bars.',
+  classes: [
     {
-      name: 'Python',
-      category: 'Programming',
-      status: 'Practicing',
-      description: 'Core language for scripting, algorithmic problem-solving, and AI/ML experiments.',
-      focusArea: 'Logic building, file I/O, automation scripts, and data structures.',
-      iconName: 'Terminal',
+      name: 'Programming & Logic',
+      days: 3, // renders 3 orbit rings
+      badge: 'Core Foundation',
+      skills: ['Python (Daily Driver & ML)', 'C++ (Memory & Pointers)', 'JavaScript (ES6+ & Web)'],
+      status: 'Practicing & Building',
+      cta: 'Explore Code Repo',
     },
     {
-      name: 'C++',
-      category: 'Programming',
-      status: 'Learning',
-      description: 'Building strong foundations in memory models, pointers, and performance-critical code.',
-      focusArea: 'Memory management, OOP fundamentals, and standard template library (STL).',
-      iconName: 'Cpu',
-    },
-    {
-      name: 'JavaScript',
-      category: 'Programming',
+      name: 'Frontend & Architecture',
+      days: 4, // renders 4 orbit rings
+      badge: 'Primary Build Track',
+      featured: true,
+      skills: ['HTML5 Semantic Markup', 'CSS3 / Tailwind CSS v4', 'Responsive Mobile-First UI', 'Single rAF Kinematics'],
       status: 'Building With',
-      description: 'Used for dynamic web scripting, DOM manipulation, and interactive application logic.',
-      focusArea: 'ES6+ syntax, asynchronous programming (Promises/async-await), and event handling.',
-      iconName: 'Code2',
-    },
-    // Frontend
-    {
-      name: 'HTML5',
-      category: 'Frontend',
-      status: 'Building With',
-      description: 'Writing clean, semantic, and accessible markup for modern web experiences.',
-      focusArea: 'Semantic tags, SEO foundations, accessibility (ARIA), and structured layouts.',
-      iconName: 'FileCode',
+      cta: 'Inspect Layouts',
     },
     {
-      name: 'CSS3 / Modern Styling',
-      category: 'Frontend',
-      status: 'Building With',
-      description: 'Styling interfaces using modern CSS, Flexbox, CSS Grid, and custom animations.',
-      focusArea: 'Flexbox, Grid, CSS variables, fluid typography, and transitions.',
-      iconName: 'Palette',
+      name: 'Tools & Systems Security',
+      days: 3, // renders 3 orbit rings
+      badge: 'DevOps & Defense',
+      skills: ['Git & GitHub Workflows', 'VS Code & Unix Terminal', 'Cybersecurity Fundamentals', 'Networking & Sockets'],
+      status: 'Exploring & Practicing',
+      cta: 'View Lab Notes',
     },
-    {
-      name: 'Responsive Design',
-      category: 'Frontend',
-      status: 'Building With',
-      description: 'Ensuring seamless usability across mobile, tablet, laptop, and ultra-wide displays.',
-      focusArea: 'Mobile-first breakpoints, touch-friendly UI, and responsive image scaling.',
-      iconName: 'Smartphone',
-    },
-    // Tools
-    {
-      name: 'Git',
-      category: 'Tools',
-      status: 'Practicing',
-      description: 'Managing source code changes, branching workflows, and commit hygiene.',
-      focusArea: 'Branching, merging, commit discipline, and resolving conflicts.',
-      iconName: 'GitBranch',
-    },
-    {
-      name: 'GitHub',
-      category: 'Tools',
-      status: 'Practicing',
-      description: 'Hosting project code, collaborating with teammates, and exploring open source.',
-      focusArea: 'Repositories, issues, pull requests, and collaborative code reviews.',
-      iconName: 'Github',
-    },
-    {
-      name: 'VS Code',
-      category: 'Tools',
-      status: 'Building With',
-      description: 'Primary code editor configured with linting, formatting, and debugging workflows.',
-      focusArea: 'Extensions, workspace settings, integrated terminal, and productivity shortcuts.',
-      iconName: 'Monitor',
-    },
-    {
-      name: 'Terminal / CLI',
-      category: 'Tools',
-      status: 'Practicing',
-      description: 'Navigating Unix environments, running scripts, and managing package dependencies.',
-      focusArea: 'Bash navigation, shell commands, SSH basics, and process monitoring.',
-      iconName: 'CommandLine',
-    },
-    // Areas of Interest
-    {
-      name: 'Artificial Intelligence',
-      category: 'Areas of Interest',
-      status: 'Exploring',
-      description: 'Understanding intelligent agents, heuristic search, and foundational AI principles.',
-      focusArea: 'Agent concepts, search algorithms, and intelligent systems design.',
-      iconName: 'Sparkles',
-    },
-    {
-      name: 'Machine Learning',
-      category: 'Areas of Interest',
-      status: 'Learning',
-      description: 'Studying statistical learning models, feature engineering, and model evaluation.',
-      focusArea: 'Supervised/unsupervised algorithms, evaluation metrics, and basic neural nets.',
-      iconName: 'Brain',
-    },
-    {
-      name: 'Cybersecurity',
-      category: 'Areas of Interest',
-      status: 'Exploring',
-      description: 'Investigating defense principles, secure coding standards, and vulnerability analysis.',
-      focusArea: 'OWASP top 10, network reconnaissance, and defense-in-depth concepts.',
-      iconName: 'ShieldCheck',
-    },
-    {
-      name: 'Web Development',
-      category: 'Areas of Interest',
-      status: 'Building With',
-      description: 'Creating full-featured client applications with responsive design and modern tooling.',
-      focusArea: 'Modern frontend frameworks, component architecture, and API integration.',
-      iconName: 'Globe',
-    },
-    {
-      name: 'Software Engineering',
-      category: 'Areas of Interest',
-      status: 'Practicing',
-      description: 'Applying methodical software practices, testing basics, and modular system design.',
-      focusArea: 'Clean code principles, design patterns, and sustainable project architecture.',
-      iconName: 'Layers',
-    },
-  ] as SkillItem[],
+  ],
 };
 
-export const journeyContent = {
-  heading: 'The Journey So Far',
-  subheading: 'TIMELINE & MILESTONES',
-  note: 'A chronological view of my computer science trajectory, learning focus, and hands-on milestones.',
-  milestones: [
-    {
-      period: '2026',
-      headline: 'Started Computer Science Journey at NST',
-      description:
-        'Commenced my undergraduate degree in Computer Science / AI & ML at Newton School of Technology (NST), Rishihood University. Focused on building deep foundations in programming, algorithmic thinking, and core systems.',
-      area: 'Core Computer Science',
-      tags: ['Newton School of Technology', 'Rishihood University', 'CS Foundations'],
-      isCurrent: false,
-    },
-    {
-      period: '2026',
-      headline: 'Began Exploring Programming, Web & AI/ML',
-      description:
-        'Initiated daily coding practice in Python and C++, studying memory allocation, data structures, and object-oriented paradigms, while diving into modern responsive web interfaces.',
-      area: 'Programming & Web Dev',
-      tags: ['Python', 'C++', 'Modern Web', 'Data Structures'],
-      isCurrent: false,
-    },
-    {
-      period: '2026',
-      headline: 'Participated in Hackathon Projects & Problem Solving',
-      description:
-        'Engaged in collaborative hackathon environments. Formed team ENIX for Smart India Hackathon 2026 to tackle adaptive LiDAR mapping and participated in sprint-based problem statements.',
-      area: 'Hackathons & Teamwork',
-      tags: ['SIH 2026', 'Team ENIX', 'Sprint Hacking', 'Collaborative Builds'],
-      isCurrent: false,
-    },
-    {
-      period: '2026',
-      headline: 'Started Developing Startup & Productivity Concepts',
-      description:
-        'Conceptualized RoomRush—a self-pickup student marketplace for hostel dorm shops—and designed the NST Academic Notes browser extension to solve genuine everyday campus friction.',
-      area: 'Student Utilities & Startups',
-      tags: ['RoomRush', 'NST Notes Extension', 'Product Ideation', 'Campus Solutions'],
-      isCurrent: false,
-    },
-    {
-      period: 'Present',
-      headline: 'Learning, Building & Exploring Cybersecurity',
-      description:
-        'Continuously refining technical fundamentals, practicing algorithms, building practical software projects, and diving into foundational cybersecurity concepts and open-source ecosystems.',
-      area: 'Continuous Growth & Cybersecurity',
-      tags: ['Cybersecurity Labs', 'Open Source', 'Algorithm Practice', 'Active Building'],
-      isCurrent: true,
-    },
-  ] as JourneyMilestone[],
-};
-
-export const hackathonsContent = {
-  heading: 'Beyond the Classroom',
-  subheading: 'HACKATHONS & ACTIVITIES',
-  note: 'Hands-on participation, collaborative hackathons, and technical problem-solving sprints. Transparently documented with no exaggerated claims.',
+export const hackathonsData = {
+  eyebrow: 'Beyond the Classroom',
+  heading: 'Hackathons & Initiatives.',
+  note: 'Documented with transparent status — distinguishing concept submissions, participation, and active prototypes.',
   items: [
     {
       id: 'sih-2026',
       name: 'Smart India Hackathon 2026',
       year: '2026',
-      category: 'Hackathon',
-      projectOrActivity: 'Adaptive Variable-Resolution 2.5D LiDAR Mapping Concept',
-      teamRole: 'Software & Algorithm Concept Contributor (Team ENIX)',
+      badge: 'SIH 2026',
+      category: 'National Hackathon',
+      project: 'Adaptive Variable-Resolution 2.5D LiDAR Mapping',
+      teamRole: 'Software & Algorithm Contributor (Team ENIX)',
       status: 'Participation / Concept Submission',
-      statusType: 'submission',
-      description:
-        'Collaborated with Team ENIX to formulate an adaptive variable-resolution 2.5D LiDAR processing pipeline aimed at optimizing spatial point cloud efficiency for smart vehicle software.',
-      takeaway:
-        'Gained valuable experience in sensor data paradigms, team role distribution under technical requirements, and structuring competitive proposals.',
-      tech: ['Python', 'LiDAR Data', 'Algorithmic Geometry', 'Team ENIX'],
+      desc: 'Collaborated with Team ENIX to formulate an adaptive 2.5D LiDAR spatial processing pipeline aimed at optimizing point cloud processing for smart vehicle software.',
+      takeaway: 'Gained hands-on experience in sensor data geometry and structuring competitive technical proposals.',
     },
     {
-      id: 'nst-construct-hackathon',
+      id: 'nst-construct',
       name: 'NST Construct Hackathon',
       year: '2026',
-      category: 'Hackathon',
-      projectOrActivity: 'Rapid Campus Solution Prototyping',
+      badge: 'Campus Sprint',
+      category: 'Prototyping Sprint',
+      project: 'Rapid Campus Solution Prototyping',
       teamRole: 'Frontend Prototyping & Product Ideation',
       status: 'Hackathon Participant',
-      statusType: 'participation',
-      description:
-        'High-intensity on-campus engineering hackathon focused on taking student friction points and engineering functional prototypes under strict time constraints.',
-      takeaway:
-        'Learned how to prioritize the critical path of an MVP, make swift architectural trade-offs, and pitch technical ideas clearly.',
-      tech: ['Rapid Prototyping', 'JavaScript', 'Tailwind CSS', 'User Testing'],
+      desc: 'High-intensity on-campus engineering hackathon focused on transforming student friction points into functional prototypes under clock pressure.',
+      takeaway: 'Never spend 6 hours debating architecture you can validate with real users in 30 minutes.',
     },
     {
-      id: 'dtu-vivekananda-hackathon',
-      name: 'DTU Vivekananda Innovation Hackathon 2026',
+      id: 'dtu-vivekananda',
+      name: 'DTU Vivekananda Innovation Hackathon',
       year: '2026',
+      badge: 'Inter-College',
       category: 'Innovation Challenge',
-      projectOrActivity: 'Practical Technological Innovation Challenge',
+      project: 'Practical Innovation Challenge',
       teamRole: 'Team Collaborator & Research',
       status: 'Participant / Project Submission',
-      statusType: 'submission',
-      description:
-        'Participated in an inter-college innovation challenge exploring tech-driven approaches to everyday community and academic workflow improvements.',
-      takeaway:
-        'Interacted with diverse peer teams, gathered perspective on problem framing, and deepened commitment to building software that solves practical issues.',
-      tech: ['Innovation Sprint', 'Collaborative Research', 'System Design'],
+      desc: 'Participated in an inter-college innovation challenge exploring tech-driven approaches to everyday community and academic workflow improvements.',
+      takeaway: 'Interacted with diverse peer teams and deepened commitment to building software that solves practical issues.',
     },
-  ] as HackathonActivity[],
+  ],
 };
 
-export const currentlyExploringContent = {
-  heading: 'Currently Exploring',
-  subheading: "DEVELOPER'S LEARNING DASHBOARD",
+export const currentlyExploringData = {
+  eyebrow: 'Developer Telemetry',
+  heading: 'Currently Exploring.',
   note: 'A transparent view into the technical topics I am actively studying, practicing, and building projects around.',
   topics: [
-    {
-      id: 'topic-python',
-      topic: 'Python Programming',
-      status: 'Active Practice',
-      shortDescription: 'Mastering idioms, standard libraries, scripting automation, and preparing for algorithmic problem-solving.',
-      focusTrack: 'Algorithms, automation, and backend scripting foundations.',
-      relatedProjects: 'Scripting tools, data manipulation & basic network utilities',
-      tags: ['Language', 'Daily Practice', 'Algorithms'],
-    },
-    {
-      id: 'topic-cpp',
-      topic: 'C++ Fundamentals',
-      status: 'Core Study',
-      shortDescription: 'Deepening understanding of low-level memory layout, pointer mechanics, references, and object-oriented design.',
-      focusTrack: 'Memory management, pointers, and performance-first thinking.',
-      relatedProjects: 'Console data structure implementations & memory lab exercises',
-      tags: ['Systems', 'Memory', 'CS Core'],
-    },
-    {
-      id: 'topic-dsa',
-      topic: 'Data Structures & Algorithms',
-      status: 'Continuous Practice',
-      shortDescription: 'Practicing arrays, linked lists, stacks, queues, trees, graphs, sorting techniques, and Big-O complexity.',
-      focusTrack: 'Time/space complexity analysis and disciplined problem decomposition.',
-      relatedProjects: 'Algorithmic problem-solving repository',
-      tags: ['DSA', 'Problem Solving', 'Complexity'],
-    },
-    {
-      id: 'topic-cybersecurity',
-      topic: 'Cybersecurity Fundamentals',
-      status: 'Exploring & Labs',
-      shortDescription: 'Learning fundamental defensive security concepts, OWASP security principles, and common threat vectors.',
-      focusTrack: 'Secure code practices, authentication basics, and vulnerability identification.',
-      relatedProjects: 'Hands-on security lab exercises & protocol inspection',
-      tags: ['Security', 'Defensive', 'OWASP'],
-    },
-    {
-      id: 'topic-networking',
-      topic: 'Networking',
-      status: 'Hands-on Discovery',
-      shortDescription: 'Studying the OSI model, TCP/IP stack, DNS resolution, HTTP/HTTPS protocol headers, and packet flows.',
-      focusTrack: 'Client-server communications, socket basics, and network traffic traces.',
-      relatedProjects: 'Socket scripting experiments & packet inspection tools',
-      tags: ['Protocols', 'TCP/IP', 'Sockets'],
-    },
-    {
-      id: 'topic-backend',
-      topic: 'Backend Development',
-      status: 'Early Building',
-      shortDescription: 'Exploring RESTful API design principles, server runtimes, request-response lifecycles, and database integration.',
-      focusTrack: 'Endpoints, routing, JSON validation, and simple persistent stores.',
-      relatedProjects: 'API prototype endpoints & database connection tests',
-      tags: ['APIs', 'Server', 'Architecture'],
-    },
-    {
-      id: 'topic-aiml',
-      topic: 'Artificial Intelligence & ML',
-      status: 'Specialization Track',
-      shortDescription: 'Studying mathematical intuitions behind machine learning, linear models, classification metrics, and neural nets.',
-      focusTrack: 'Supervised learning workflows, feature sets, and model evaluation.',
-      relatedProjects: 'Introductory ML notebooks & predictive experimentation',
-      tags: ['AI/ML', 'NST Specialization', 'Neural Nets'],
-    },
-    {
-      id: 'topic-opensource',
-      topic: 'Open Source',
-      status: 'Getting Started',
-      shortDescription: 'Learning public repository navigation, issue tracking etiquette, documentation reading, and Git pull request hygiene.',
-      focusTrack: 'Community collaboration, contributing guidelines, and open source exploration.',
-      relatedProjects: 'Preparing for initial repository contributions & GSoC research',
-      tags: ['Community', 'Git', 'GSoC Aspirations'],
-    },
-  ] as ExploringTopic[],
+    { id: 'exp-1', title: 'Python Programming', track: 'Active Practice', desc: 'Mastering idioms, scripts, file I/O, algorithmic logic, and preparing for ML data handling.' },
+    { id: 'exp-2', title: 'C++ Fundamentals', track: 'Core Study', desc: 'Pointers, memory management, stack vs heap allocation, and standard template library (STL).' },
+    { id: 'exp-3', title: 'Data Structures & Algorithms', track: 'Continuous Practice', desc: 'Arrays, linked lists, trees, graphs, sorting algorithms, and Big-O time/space complexity analysis.' },
+    { id: 'exp-4', title: 'Cybersecurity Fundamentals', track: 'Exploring & Labs', desc: 'Defensive security principles, OWASP Top 10 vulnerabilities, authentication, and secure coding.' },
+    { id: 'exp-5', title: 'Networking Protocols', track: 'Hands-on Discovery', desc: 'TCP/IP stack, OSI layers, DNS resolution, HTTP/HTTPS headers, and client-server socket communication.' },
+    { id: 'exp-6', title: 'Backend Architecture', track: 'Early Building', desc: 'RESTful API principles, request-response lifecycles, JSON validation, and simple database persistence.' },
+    { id: 'exp-7', title: 'Artificial Intelligence & ML', track: 'Specialization Track', desc: 'Mathematical foundations of machine learning, classification, evaluation metrics, and neural nets.' },
+    { id: 'exp-8', title: 'Open Source', track: 'Getting Started', desc: 'Navigating public GitHub repositories, issue triage, documentation reading, and preparing for GSoC.' },
+  ],
 };
 
-export const contactContent = {
-  heading: "Have an Idea? Let's Build Something.",
-  subheading: 'CONNECT & COLLABORATE',
-  supportingText:
-    "I'm always interested in learning, collaborating, exploring new ideas, and building meaningful projects.",
-  location: siteConfig.contact.location,
-  email: siteConfig.contact.email,
-  displayEmail: siteConfig.contact.displayEmail,
-  socials: siteConfig.socials,
-  formNotice: siteConfig.contact.formNotice,
-};
-
-export const footerContent = {
-  name: siteConfig.personal.name,
-  tagline: 'Learning • Building • Innovating',
-  quote: 'Designed and built with curiosity.',
-  socials: siteConfig.socials,
+export const contactData = {
+  eyebrow: 'Connect & Manifest',
+  heading: 'Put your name on the manifest.',
+  body: 'Whether you want to discuss a hackathon idea, early startup prototypes, or talk about AI and cybersecurity — I am always ready to connect with fellow ambitious builders.',
+  windowLabel: 'Next hackathon / sprint window',
+  window: '2027-01-15T00:00:00Z',
 };

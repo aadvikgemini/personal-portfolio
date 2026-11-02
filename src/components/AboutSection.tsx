@@ -1,196 +1,151 @@
-import {
-  GraduationCap,
-  Target,
-  Sparkles,
-  BookOpen,
-  Brain,
-  Shield,
-  Layout,
-  Code,
-  Trophy,
-  Rocket,
-  GitPullRequest,
-  Compass,
-  CheckCircle2,
-  MapPin,
-  Building2,
-} from 'lucide-react';
-import { aboutContent } from '../content';
-
-const iconMap: Record<string, React.ElementType> = {
-  Brain,
-  Shield,
-  Layout,
-  Code,
-  Trophy,
-  Rocket,
-  GitPullRequest,
-  Compass,
-};
+import { about } from '../content';
+import { useReveals } from '../hooks/useReveals';
 
 export function AboutSection() {
+  const ref = useReveals<HTMLElement>();
+
   return (
     <section
+      ref={ref}
       id="about"
-      aria-label="About Me Section"
-      className="relative min-h-screen w-full bg-[#080b10] py-24 sm:py-32 border-t border-white/5 tech-grid"
+      aria-labelledby="about-title"
+      className="relative bg-void px-4 py-28 sm:px-6 md:px-[6vw] md:py-36 border-t border-white/10"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-        
+      <div className="mx-auto max-w-7xl">
         {/* Section Header */}
-        <div className="flex flex-col items-start mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-mono uppercase tracking-widest mb-3">
-            <Sparkles className="size-3.5" />
-            <span>{aboutContent.subheading}</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            {aboutContent.heading}
+        <div data-reveal className="max-w-3xl">
+          <p className="font-mono text-label text-earth uppercase tracking-[0.2em]">
+            // {about.eyebrow}
+          </p>
+          <h2 id="about-title" className="mt-4 font-display text-display text-white">
+            {about.heading}
           </h2>
         </div>
 
-        {/* Top Grid: Personal Statement & Education Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
-          
-          {/* Left Column: Narrative paragraphs */}
-          <div className="lg:col-span-7 space-y-5">
-            <div className="rounded-2xl bg-[#0e131d]/80 border border-white/10 p-6 sm:p-8 backdrop-blur-md shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
-              
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <span>The Student Journey</span>
-                <span className="size-1.5 rounded-full bg-cyan-400" />
-              </h3>
-
-              <div className="space-y-4 text-slate-300 text-base sm:text-lg leading-relaxed font-light">
-                {aboutContent.paragraphs.map((p, idx) => (
+        {/* Narrative & Education Card Grid */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Narrative */}
+          <div data-reveal className="lg:col-span-7 space-y-6">
+            <div className="rounded-[6px] bg-void-2/80 p-6 sm:p-8 border border-white/10 brackets relative">
+              <span className="font-mono text-[0.625rem] text-earth uppercase tracking-widest block mb-4">
+                TRANSMISSION // STUDENT STATEMENT
+              </span>
+              <div className="space-y-4 text-body text-regolith/85 font-light leading-relaxed">
+                {about.paragraphs.map((p, idx) => (
                   <p key={idx}>{p}</p>
                 ))}
               </div>
-
-              {/* Core Philosophy pill */}
-              <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center gap-3 text-xs font-mono text-slate-400">
-                <span className="text-cyan-400 font-semibold">Core Principle:</span>
-                <span>Active experimentation & honest learning over passive memorization</span>
+              <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs font-mono text-regolith/50">
+                <span>NEWTON SCHOOL OF TECHNOLOGY</span>
+                <span className="text-earth">STATUS: LEARNING & BUILDING</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Education Card */}
-          <div className="lg:col-span-5">
-            <div className="rounded-2xl bg-gradient-to-b from-[#0f1523] to-[#0a0d14] border border-sky-500/25 p-6 sm:p-7 shadow-xl backdrop-blur-md relative">
+          {/* Right Column: Academic Foundations Card */}
+          <div data-reveal className="lg:col-span-5">
+            <div className="rounded-[6px] bg-void-2 p-6 sm:p-7 border border-earth/30 brackets relative">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div className="flex items-center gap-2 text-sky-400 text-xs font-mono uppercase tracking-wider">
-                  <GraduationCap className="size-4" />
-                  <span>Academic Foundations</span>
-                </div>
-                <span className="text-[0.625rem] font-mono bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">
-                  {aboutContent.education.period}
+                <span className="font-mono text-[0.625rem] uppercase tracking-widest text-earth">
+                  ACADEMIC SPECIFICATION
+                </span>
+                <span className="font-mono text-[0.625rem] bg-earth/15 text-earth px-2 py-0.5 rounded">
+                  {about.education.period}
                 </span>
               </div>
 
               <div className="mt-5 space-y-4">
                 <div>
-                  <span className="text-xs font-mono text-slate-400 block uppercase">Degree Program</span>
-                  <h4 className="text-xl font-bold text-white mt-0.5">
-                    {aboutContent.education.degree}
-                  </h4>
+                  <span className="font-mono text-label text-regolith/50 uppercase block">Degree Program</span>
+                  <h3 className="font-display text-[1.125rem] text-white mt-1 tracking-wide">
+                    {about.education.degree}
+                  </h3>
                 </div>
 
-                <div className="space-y-2 text-sm text-slate-300">
-                  <div className="flex items-start gap-2.5">
-                    <Building2 className="size-4 text-sky-400 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-white">{aboutContent.education.school}</span>
-                      <span className="block text-slate-400 text-xs">{aboutContent.education.university}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 text-xs text-slate-400 pt-1">
-                    <MapPin className="size-3.5 text-slate-500 shrink-0" />
-                    <span>{aboutContent.education.location}</span>
-                  </div>
+                <div className="space-y-1 font-mono text-xs text-regolith/80">
+                  <p className="text-white font-medium">{about.education.school}</p>
+                  <p className="text-regolith/60">{about.education.university}</p>
+                  <p className="text-earth/80 pt-1">{about.education.location}</p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#070a0f] border border-white/5 text-xs text-slate-400 leading-relaxed">
-                  <span className="text-slate-300 font-medium block mb-1">Focus Area:</span>
-                  {aboutContent.education.note}
-                </div>
+                <p className="text-xs text-regolith/70 font-light leading-relaxed pt-2 border-t border-white/5">
+                  {about.education.note}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Current Interests Section */}
-        <div className="mb-20">
-          <div className="flex items-center gap-2 mb-6">
-            <BookOpen className="size-5 text-sky-400" />
-            <h3 className="text-2xl font-bold text-white">Current Areas of Interest</h3>
+        {/* Current Interests Grid */}
+        <div className="mt-20">
+          <div data-reveal className="flex items-center justify-between mb-8 pb-3 border-b border-white/10">
+            <div>
+              <p className="font-mono text-label text-earth uppercase tracking-[0.2em]">// AREAS OF STUDY</p>
+              <h3 className="font-display text-[1.5rem] text-white mt-1 tracking-wide">
+                Current Technical Interests
+              </h3>
+            </div>
+            <span className="font-mono text-label text-regolith/50 uppercase hidden sm:inline">
+              8 SPECIALIZATION PATHS
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {aboutContent.currentInterests.map((interest) => {
-              const IconComponent = iconMap[interest.icon] || Sparkles;
-
-              return (
-                <div
-                  key={interest.title}
-                  className="rounded-xl bg-[#0e131d]/70 border border-white/10 p-5 hover:border-sky-500/30 transition-all hover:bg-[#121926]/80 group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="p-2 rounded-lg bg-sky-500/10 text-sky-400 group-hover:text-cyan-300 transition-colors">
-                      <IconComponent className="size-4" />
-                    </div>
-                    <span className="text-[0.625rem] font-mono text-slate-500 uppercase">
-                      {interest.category}
-                    </span>
-                  </div>
-                  <h4 className="text-base font-semibold text-white group-hover:text-sky-200 transition-colors">
-                    {interest.title}
-                  </h4>
-                  <p className="mt-1.5 text-xs text-slate-400 leading-relaxed font-light">
-                    {interest.desc}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Long-term Development Goals */}
-        <div>
-          <div className="flex items-center gap-2 mb-6">
-            <Target className="size-5 text-cyan-400" />
-            <h3 className="text-2xl font-bold text-white">Long-Term Development Goals</h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {aboutContent.longTermGoals.map((goalItem) => (
+            {about.interests.map((item, i) => (
               <div
-                key={goalItem.id}
-                className="rounded-xl bg-[#0e131d]/60 border border-white/10 p-5 hover:border-cyan-500/30 transition-all group relative overflow-hidden"
+                key={item.title}
+                data-reveal
+                style={{ transitionDelay: `${i * 60}ms` }}
+                className="rounded-[6px] bg-void-2/60 p-5 border border-white/10 hover:border-earth/40 transition-colors group"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="size-6 rounded-full bg-sky-500/10 text-sky-300 text-xs font-mono font-bold flex items-center justify-center border border-sky-500/20">
-                    0{goalItem.id}
-                  </span>
-                  <span className="text-[0.625rem] font-mono uppercase bg-white/5 text-slate-400 px-2 py-0.5 rounded">
-                    {goalItem.category}
-                  </span>
+                <div className="flex items-center justify-between font-mono text-[0.625rem] text-regolith/50 uppercase mb-3">
+                  <span>0{i + 1}</span>
+                  <span className="text-earth">{item.category}</span>
                 </div>
-
-                <h4 className="text-sm font-semibold text-white group-hover:text-cyan-200 transition-colors flex items-start gap-2">
-                  <CheckCircle2 className="size-4 text-cyan-400 shrink-0 mt-0.5" />
-                  <span>{goalItem.goal}</span>
+                <h4 className="font-display text-[0.9375rem] text-white tracking-wide group-hover:text-earth transition-colors">
+                  {item.title}
                 </h4>
-
-                <p className="mt-2 text-xs text-slate-400 font-light leading-relaxed pl-6">
-                  {goalItem.focus}
+                <p className="mt-2 text-xs text-regolith/70 font-light leading-relaxed">
+                  {item.desc}
                 </p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Long-Term Development Goals */}
+        <div className="mt-20">
+          <div data-reveal className="flex items-center justify-between mb-8 pb-3 border-b border-white/10">
+            <div>
+              <p className="font-mono text-label text-earth uppercase tracking-[0.2em]">// HORIZON</p>
+              <h3 className="font-display text-[1.5rem] text-white mt-1 tracking-wide">
+                Long-Term Development Goals
+              </h3>
+            </div>
+            <span className="font-mono text-label text-regolith/50 uppercase hidden sm:inline">
+              SYSTEM MILESTONES
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {about.goals.map((g, i) => (
+              <div
+                key={g.id}
+                data-reveal
+                style={{ transitionDelay: `${i * 80}ms` }}
+                className="rounded-[6px] bg-void-2/40 p-5 border border-white/10 hover:border-white/25 transition-colors brackets relative"
+              >
+                <span className="font-mono text-label text-earth block mb-2">{g.id}</span>
+                <h4 className="font-display text-[0.9375rem] text-white tracking-wide">
+                  {g.goal}
+                </h4>
+                <p className="mt-2 text-xs text-regolith/70 font-light leading-relaxed font-sans">
+                  {g.focus}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
